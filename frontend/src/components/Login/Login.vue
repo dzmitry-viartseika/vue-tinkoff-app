@@ -20,7 +20,7 @@
           <div class="app-field__label">
             {{ $t(formLabelPassword) }}
           </div>
-          <input type="text"
+          <input type="password"
                  class="app-field__input"
                  v-model="user.password"
           >
@@ -58,7 +58,9 @@ export default {
     const loginButton = computed(() => loginButtonText);
 
     const proceedTo = () => {
-      router.push('/');
+      console.log('router', router);
+      console.log('user', user);
+      // router.push('/');
     };
 
     return {
