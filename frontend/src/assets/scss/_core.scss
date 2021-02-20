@@ -61,8 +61,17 @@ body {
         padding: 15px 0;
       }
 
-      &__content {
+      &__footer {
 
+        &-link {
+          padding: 10px 0;
+          cursor: pointer;
+          transition: color .15s ease-in;
+
+          &:hover {
+            color: rgba($color-black, .8)
+          }
+        }
       }
     }
   }

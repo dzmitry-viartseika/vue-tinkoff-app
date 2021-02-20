@@ -20,6 +20,15 @@ const routes = [
       layout: 'main',
     },
   },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: () => import(/* webpackChunkName: "help" */ '@/components/SignUp/SignUp.vue'),
+    meta: {
+      title: i18n.global.t('titles.signUp'),
+      layout: 'modal',
+    },
+  },
 ];
 
 const router = createRouter({

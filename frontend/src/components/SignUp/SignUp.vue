@@ -9,6 +9,15 @@
       <div class="app-modal-form__content">
         <div class="app-field">
           <div class="app-field__label">
+            {{ $t(formLabelName) }}
+          </div>
+          <input type="text"
+                 class="app-field__input"
+                 v-model="user.name"
+          >
+        </div>
+        <div class="app-field">
+          <div class="app-field__label">
             {{ $t(formLabelEmail) }}
           </div>
           <input type="text"
@@ -28,7 +37,7 @@
       </div>
       <div class="app-modal-form__footer">
         <div class="app-modal-form__footer-link"
-             @click="proceedTo('/sign-up')"
+             @click="proceedTo('/login')"
         >
           {{ $t(formLinkText) }}
         </div>
@@ -45,23 +54,26 @@ import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
-  name: 'Login',
+  name: 'SignUp',
   setup() {
     const router = useRouter();
     const user = reactive({
+      name: '',
       email: '',
       password: '',
     });
-    const loginTitle = 'login.title';
+    const loginTitle = 'login.signUp';
+    const formLink = 'login.haveAccount';
     const labelEmail = 'labels.email';
-    const formLink = 'login.createAccount';
+    const labelName = 'labels.name';
     const labelPassword = 'labels.password';
-    const loginButtonText = 'global.signIn';
+    const loginButtonText = 'global.signUp';
     const formTitle = computed(() => loginTitle);
-    const formLinkText = computed(() => formLink);
+    const formLabelName = computed(() => labelName);
     const formLabelEmail = computed(() => labelEmail);
     const formLabelPassword = computed(() => labelPassword);
     const loginButton = computed(() => loginButtonText);
+    const formLinkText = computed(() => formLink);
 
     const proceedTo = (route) => {
       console.log('user', user);
@@ -72,6 +84,7 @@ export default {
       formTitle,
       formLabelEmail,
       formLabelPassword,
+      formLabelName,
       formLinkText,
       loginButton,
       user,
@@ -81,11 +94,6 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-@import "@/assets/scss/variables";
-
-.app-modal {
-
-}
+<style scoped>
 
 </style>

@@ -1,17 +1,23 @@
 {
   "global": {
     "more": "more",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
   },
   "titles": {
     "auth": "Authorization",
-    "help": "Help"
+    "help": "Help",
+    "signUp": "Sign Up"
   },
   "login": {
-    "title": "Sign in"
+    "title": "Sign in",
+    "signUp": "Sign up",
+    "haveAccount": "Have an account",
+    "createAccount": "Create new account"
   },
   "labels": {
     "email": "Email",
+    "name": "Name",
     "password": "Password"
   }
 }
