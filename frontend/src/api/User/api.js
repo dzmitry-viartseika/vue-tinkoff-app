@@ -15,6 +15,6 @@ export default {
     const instCred = axios.create({
       baseURL: CURRENT_SERVER,
     });
-    return instCred.post('auth/signup', user);
+    return instCred.post('auth/', user);
   },
 };

@@ -1,4 +1,5 @@
 <template>
+  <Loader v-if="isLoader"/>
   <div class="app-modal">
     <div class="app-modal-form">
       <div class="app-modal-form__header">
@@ -41,7 +42,9 @@
         >
           {{ $t(formLinkText) }}
         </div>
-        <button class="app-button">
+        <button class="app-button"
+          @click="loginUser"
+        >
           {{ $t(loginButton) }}
         </button>
       </div>
@@ -50,13 +53,19 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import UsersApi from '@/api/User/api';
+import Loader from '@/components/Main/Loader.vue';
 
 export default {
   name: 'SignUp',
+  components: {
+    Loader,
+  },
   setup() {
     const router = useRouter();
+    const isLoader = ref(false);
     const user = reactive({
       name: '',
       email: '',
@@ -80,6 +89,19 @@ export default {
       router.push(route);
     };
 
+    const loginUser = async () => {
+      try {
+        isLoader.value = true;
+        const resp = await UsersApi.registration(user);
+        // usersListArray.value = resp.data;
+        console.log('resp', resp);
+        isLoader.value = false;
+      } catch (err) {
+        isLoader.value = false;
+        console.error(err);
+      }
+    };
+
     return {
       formTitle,
       formLabelEmail,
@@ -88,7 +110,9 @@ export default {
       formLinkText,
       loginButton,
       user,
+      isLoader,
       proceedTo,
+      loginUser,
     };
   },
 };
