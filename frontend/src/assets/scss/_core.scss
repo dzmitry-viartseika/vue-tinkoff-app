@@ -1,0 +1,28 @@
+body {
+  font: $font-size-base $font-global;
+  line-height: 1.2;
+  color: $color-black;
+}
+
+.app {
+  background: $bodyBgColor;
+  min-height: 100vh;
+
+  &__container {
+    width: 70%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: 30px;
+    color: $color-white;
+    margin-bottom: 15px;
+  }
+
+  &__subtitle {
+    font-size: 24px;
+  }
+}
+
+

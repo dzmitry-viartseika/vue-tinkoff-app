@@ -1,0 +1,32 @@
+.app-button {
+  height: 40px;
+  padding: 0 20px;
+  background: $colorBtn;
+  border-radius: $borderRadius;
+  color: $color-white;
+  font: $font-size-base $font-global;
+  cursor: pointer;
+  transition: opacity .15s ease-in;
+
+  &_disabled {
+    opacity: .8;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  &:hover {
+    opacity: .8;
+  }
+
+  &_left {
+    text-align: left;
+  }
+
+  &_right {
+    text-align: right;
+  }
+
+  &_center {
+    text-align: center;
+  }
+}

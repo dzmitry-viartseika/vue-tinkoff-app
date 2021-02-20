@@ -1,0 +1,9 @@
+{
+  "global": {
+    "more": "more"
+  },
+  "titles": {
+    "auth": "Authorization",
+    "help": "Help"
+  }
+}
