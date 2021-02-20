@@ -1,9 +1,17 @@
 {
   "global": {
-    "more": "more"
+    "more": "more",
+    "signIn": "Sign In"
   },
   "titles": {
     "auth": "Authorization",
     "help": "Help"
+  },
+  "login": {
+    "title": "Sign in"
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Password"
   }
 }

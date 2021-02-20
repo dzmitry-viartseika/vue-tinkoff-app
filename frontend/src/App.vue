@@ -1,7 +1,6 @@
 <template>
   <div class="app">
-  <component :is="`${layout}-layout`"></component>
-      <router-view/>
+  <component :is="`${layout}-layout`" />
   </div>
 </template>
 
@@ -34,6 +33,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/style.scss';
 
 @font-face {
   font-family: 'Ubuntu';

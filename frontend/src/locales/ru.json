@@ -1,9 +1,17 @@
 {
   "global": {
-    "more": "Еще"
+    "more": "Еще",
+    "signIn": "Войти"
   },
   "titles": {
     "auth": "Авторизация",
     "help": "Помощь"
+  },
+  "login": {
+    "title": "Войти в систему"
+  },
+  "labels": {
+    "email": "Почта",
+    "password": "Пароль"
   }
 }
