@@ -22,8 +22,8 @@ export default {
   setup() {
     const route = useRoute();
     const layout = computed(() => {
-      const { meta } = route;
-      return meta.layout;
+      const { meta: { layout: templateLayout } = 'Main' } = route;
+      return templateLayout;
     });
 
     return {
