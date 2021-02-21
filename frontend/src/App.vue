@@ -26,6 +26,7 @@ export default {
     const router = useRouter();
     const layout = computed(() => {
       const { meta: { layout: templateLayout } = 'main' } = route;
+      console.log('templateLayout', templateLayout);
       return templateLayout;
     });
     const setUserInfo = (data) => store.dispatch('setUserInfo', data);
