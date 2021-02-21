@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userSchema = new mongoose.Schema({
-    login: {
+    name: {
         type: String,
-        unique:true,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        unique: true,
         required: true,
         trim: true
     },
@@ -31,8 +36,8 @@ const userSchema = new mongoose.Schema({
     }],
 });
 
-userSchema.statics.findByCredentials = async (login, password) => {
-    const user = await User.findOne({login})
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({email})
     if(!user) {
         throw new Error('Unable user')
     }

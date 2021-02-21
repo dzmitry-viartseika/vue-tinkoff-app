@@ -1,17 +1,23 @@
 <template>
   <header class="app-header">
     <div class="app-header__logo" @click="proceedTo('/')">
-      Vue 3 + Typescript
+      Online Bank
     </div>
     <nav class="app-header__nav">
       <a class="app-header__link"
-         :class="{'app-header__link_active': test === link.route}"
+         :class="{'app-header__link_active': activePathName === link.route}"
          v-for="link in navList"
          :key="link.id"
          @click.prevent="proceedTo(link.route)">
         {{ link.text }}
       </a>
     </nav>
+    <div class="app-header__language">
+      ENG
+    </div>
+    <div class="app-header__user">
+      {{ userInfo.name }}
+    </div>
   </header>
 </template>
 
@@ -19,6 +25,7 @@
 import navList from '@/constants/navList';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'navBarTemplate',
@@ -29,17 +36,25 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
     const { location: { pathname } } = window;
-    const test = ref(pathname);
+    const activePathName = ref(pathname);
+    const { userInfo } = store.getters;
 
     const proceedTo = (path) => {
-      router.push(path);
-      test.value = path;
+      if (path === '/logout') {
+        localStorage.removeItem('token');
+        router.push('/login');
+      } else {
+        router.push(path);
+        activePathName.value = path;
+      }
     };
     return {
       proceedTo,
       navList,
-      test,
+      activePathName,
+      userInfo,
     };
   },
 };

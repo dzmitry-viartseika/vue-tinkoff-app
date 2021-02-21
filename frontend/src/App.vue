@@ -5,11 +5,13 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { computed, onBeforeMount } from 'vue';
 import ModalLayout from '@/components/Layouts/ModalLayout.vue';
 import SecondaryLayout from '@/components/Layouts/SecondaryLayout.vue';
 import MainLayout from '@/components/Layouts/MainLayout.vue';
+import UsersApi from '@/api/User/api';
+import { useStore } from 'vuex';
 
 export default {
   name: 'App',
@@ -20,10 +22,34 @@ export default {
   },
   setup() {
     const route = useRoute();
+    const store = useStore();
+    const router = useRouter();
     const layout = computed(() => {
-      const { meta: { layout: templateLayout } = 'Main' } = route;
+      const { meta: { layout: templateLayout } = 'main' } = route;
       return templateLayout;
     });
+    const setUserInfo = (data) => store.dispatch('setUserInfo', data);
+
+    const proceedTo = (routeName) => {
+      router.push(routeName);
+    };
+
+    const getUser = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const resp = await UsersApi.getActiveUser();
+          await setUserInfo(resp.data.user);
+          proceedTo('/');
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        proceedTo('/login');
+      }
+    };
+
+    onBeforeMount(getUser);
 
     return {
       layout,

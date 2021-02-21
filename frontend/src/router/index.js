@@ -23,10 +23,19 @@ const routes = [
   {
     path: '/sign-up',
     name: 'SignUp',
-    component: () => import(/* webpackChunkName: "help" */ '@/components/SignUp/SignUp.vue'),
+    component: () => import(/* webpackChunkName: "signUp" */ '@/components/SignUp/SignUp.vue'),
     meta: {
       title: i18n.global.t('titles.signUp'),
       layout: 'modal',
+    },
+  },
+  {
+    path: '/',
+    name: 'Applications',
+    component: () => import(/* webpackChunkName: "applications" */ '@/components/Applications/Applications.vue'),
+    meta: {
+      title: i18n.global.t('titles.signUp'),
+      layout: 'main',
     },
   },
 ];

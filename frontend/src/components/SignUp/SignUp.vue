@@ -21,7 +21,7 @@
           <div class="app-field__label">
             {{ $t(formLabelEmail) }}
           </div>
-          <input type="text"
+          <input type="email"
                  class="app-field__input"
                  v-model="user.email"
           >
@@ -43,7 +43,7 @@
           {{ $t(formLinkText) }}
         </div>
         <button class="app-button"
-          @click="loginUser"
+          @click="signUpUser"
         >
           {{ $t(loginButton) }}
         </button>
@@ -57,6 +57,7 @@ import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UsersApi from '@/api/User/api';
 import Loader from '@/components/Main/Loader.vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'SignUp',
@@ -65,6 +66,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
     const isLoader = ref(false);
     const user = reactive({
       name: '',
@@ -83,19 +85,20 @@ export default {
     const formLabelPassword = computed(() => labelPassword);
     const loginButton = computed(() => loginButtonText);
     const formLinkText = computed(() => formLink);
+    const setUserInfo = (data) => store.dispatch('setUserInfo', data);
 
     const proceedTo = (route) => {
-      console.log('user', user);
       router.push(route);
     };
 
-    const loginUser = async () => {
+    const signUpUser = async () => {
       try {
         isLoader.value = true;
         const resp = await UsersApi.registration(user);
-        // usersListArray.value = resp.data;
-        console.log('resp', resp);
+        localStorage.setItem('token', JSON.stringify(resp.data.token));
+        await setUserInfo(resp.data.user);
         isLoader.value = false;
+        proceedTo('/');
       } catch (err) {
         isLoader.value = false;
         console.error(err);
@@ -112,12 +115,13 @@ export default {
       user,
       isLoader,
       proceedTo,
-      loginUser,
+      signUpUser,
     };
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/assets/scss/variables";
 
 </style>

@@ -2,7 +2,6 @@ const service = require('../services/user-services');
 class UserController {
     constructor(){}
     addUser = async (req, res) => {
-        console.log('addUser', req.body);
         try {
             const result = await service.add(req);
             res.status(201).send(result)
@@ -27,14 +26,10 @@ class UserController {
         }
     };
     login = async (req, res) => {
-        console.log('login', res);
         try {
-            console.log('login1');
             const result = await service.login(req);
-            console.log('login2');
             res.status(201).send(result)
         } catch (e) {
-            console.log('login3', e);
             res.status(400).send({error:e.message})
         }
     };

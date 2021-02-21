@@ -9,13 +9,14 @@ const getters = {
   userInfo: (state) => state.userInfo,
 };
 
-const mutations = {
+const actions = {
   setUserInfo({ commit }, data) {
+    console.log('data', data);
     commit(types.SET_USER_INFO, { data });
   },
 };
 
-const actions = {
+const mutations = {
   // eslint-disable-next-line no-shadow
   [types.SET_USER_INFO](state, { data }) {
     state.userInfo = data;
