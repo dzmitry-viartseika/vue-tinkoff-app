@@ -26,7 +26,6 @@ export default {
     const router = useRouter();
     const layout = computed(() => {
       const { meta: { layout: templateLayout } = 'main' } = route;
-      console.log('templateLayout', templateLayout);
       return templateLayout;
     });
     const setUserInfo = (data) => store.dispatch('setUserInfo', data);
@@ -39,8 +38,8 @@ export default {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const resp = await UsersApi.getActiveUser();
-          await setUserInfo(resp.data.user);
+          const { data } = await UsersApi.getActiveUser();
+          await setUserInfo(data);
           proceedTo('/');
         } catch (e) {
           console.error(e);

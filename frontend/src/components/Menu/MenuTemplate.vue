@@ -41,6 +41,9 @@ export default {
     const activePathName = ref(pathname);
     const { userInfo } = store.getters;
 
+    console.log('userInfo');
+    console.log('userInfo', userInfo);
+
     const proceedTo = (path) => {
       if (path === '/logout') {
         localStorage.removeItem('token');
