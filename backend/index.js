@@ -21,7 +21,7 @@ const app = express()
 app.use(cors());
 const port = process.env.PORT || 8080
 app.use(express.json())
-app.use('/goods', router.goodsRouter);
+app.use('/application', router.applicationsRouter);
 app.use('/auth', router.userRouter);
 
 app.use('/', (req, res) => {

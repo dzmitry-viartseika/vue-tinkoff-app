@@ -2,12 +2,17 @@
   "global": {
     "more": "Еще",
     "signIn": "Войти",
-    "signUp": "Зарегистрировать"
+    "signUp": "Зарегистрировать",
+    "create": "Создать"
   },
   "titles": {
     "auth": "Авторизация",
     "help": "Помощь",
-    "signUp": "Регистрация"
+    "signUp": "Регистрация",
+    "application": "Заявки"
+  },
+  "modals": {
+    "createApplication": "Создать заявку"
   },
   "login": {
     "title": "Войти в систему",
@@ -18,6 +23,10 @@
   "labels": {
     "email": "Почта",
     "name": "Имя",
-    "password": "Пароль"
+    "password": "Пароль",
+    "fullName": "ФИО",
+    "phone": "Телефон",
+    "amount": "Сумма",
+    "status": "Статус"
   }
 }

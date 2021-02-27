@@ -2,20 +2,17 @@
   <div class="app-modal-form">
     <div class="app-modal-form-wrap">
       <div class="app-modal-form-wrap-header">
-        <div class="app-modal-form-wrap-header__title">
-          Создать заявку
+        <div class="app-modal-form-wrap-header__title" v-if="title">
+          {{ title }}
         </div>
         <div
           class="app-modal-form-wrap-header__close"
         >
-          <i class="custom-icon-close app-modal-form-wrap-header__icon"></i>
+          <closeModalIcon />
         </div>
       </div>
       <div class="app-modal-form-wrap-content">
-        content
-      </div>
-      <div class="app-modal-form-wrap-footer">
-        <button class="app-button">Создать</button>
+        <slot></slot>
       </div>
     </div>
     <div
@@ -25,9 +22,20 @@
 </template>
 
 <script>
+import { closeModalIcon } from '@/constants/icons';
 
 export default {
   name: 'Modal',
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+  },
+  components: {
+    closeModalIcon,
+  },
+  setup() {},
 };
 </script>
 

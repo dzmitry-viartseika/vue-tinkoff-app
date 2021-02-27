@@ -2,9 +2,13 @@
   <div class="app-application">
     <div class="app-application-header">
       <div class="app-application-header__title">
-        Заявки
+        {{ $t('titles.application') }}
       </div>
-      <button class="app-button">Создать</button>
+      <button class="app-button"
+              @click="isVisibleApplicationModal= true"
+      >
+        Создать
+      </button>
     </div>
     <div class="app-application-filters">
       searchText={{ searchText }}
@@ -13,8 +17,12 @@
     </div>
     <div class="app-application-table">
       <TableTemplate />
-      <Modal />
     </div>
+    <transition name="fade-el">
+      <ApplicationsForm v-if="isVisibleApplicationModal"
+        v-model:isVisibleApplicationModal="isVisibleApplicationModal"
+      />
+    </transition>
   </div>
 </template>
 
@@ -22,21 +30,23 @@
 import { useStore } from 'vuex';
 import { ref } from 'vue';
 import TableTemplate from '@/components/Table/TableTemplate.vue';
-import Modal from '@/components/Modal/Modal.vue';
+import ApplicationsForm from '@/components/Applications/ApplicationsForm.vue';
 
 export default {
   name: 'Applications',
   components: {
     TableTemplate,
-    Modal,
+    ApplicationsForm,
   },
   setup() {
     const store = useStore();
     const searchText = ref('');
+    const isVisibleApplicationModal = ref(false);
     console.log('store', store.getters.userInfo);
 
     return {
       searchText,
+      isVisibleApplicationModal,
     };
   },
 };

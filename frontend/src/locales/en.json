@@ -2,12 +2,17 @@
   "global": {
     "more": "more",
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "create": "Create"
   },
   "titles": {
     "auth": "Authorization",
     "help": "Help",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "application": "Application"
+  },
+  "modals": {
+    "createApplication": "Create application"
   },
   "login": {
     "title": "Sign in",
@@ -18,6 +23,10 @@
   "labels": {
     "email": "Email",
     "name": "Name",
-    "password": "Password"
+    "password": "Password",
+    "fullName": "FullName",
+    "phone": "Phone",
+    "amount": "Amount",
+    "status": "Status"
   }
 }
