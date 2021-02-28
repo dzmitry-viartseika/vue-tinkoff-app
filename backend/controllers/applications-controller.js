@@ -20,7 +20,8 @@ class ApplicationsController {
             item.phone = req.body.phone,
             item.amount = req.body.amount,
             item.status = req.body.status,
-        item.save()
+        await item.save()
+        res.send(item)
     };
     deleteApplication = async (req, res) => {
         const id = req.query.id;

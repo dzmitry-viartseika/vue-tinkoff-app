@@ -31,6 +31,15 @@
              v-model="application.amount"
       >
     </div>
+    <div class="app-field">
+      <div class="app-field__label">
+        werrtey
+      </div>
+      <SelectWithKeyTemplate
+        :settings="selectSettings"
+        @changeSelect="changeSelect($event)"
+      />
+    </div>
     <button class="app-button"
             @click="addApplication"
     >
@@ -43,13 +52,15 @@
 import Modal from '@/components/Modal/Modal.vue';
 import ApplicationApi from '@/api/Application/api';
 import Loader from '@/components/Main/Loader.vue';
-import { reactive, ref } from 'vue';
+import SelectWithKeyTemplate from '@/components/Main/SelectWithKeyTemplate.vue';
+import { reactive, ref, computed } from 'vue';
 
 export default {
   name: 'ApplicationsForm',
   components: {
     Modal,
     Loader,
+    SelectWithKeyTemplate,
   },
   setup(props, { emit }) {
     const application = reactive({
@@ -59,9 +70,35 @@ export default {
       status: '',
     });
     const isLoader = ref(false);
+    const setActiveCountry = ref(-1);
+    const selectStatusList = ref([
+      {
+        key: 1,
+        text: '1',
+      },
+      {
+        key: 2,
+        text: '2',
+      },
+    ]);
+
+    const selectSettings = computed(() => ({
+      optionList: selectStatusList,
+      placeholderText: 'werrrr',
+      selectedKey: setActiveCountry,
+      disable: false,
+      toTop: false,
+      tabindex: 1,
+      selectClass: '',
+      imagePosition: 'left',
+      showImageInput: false,
+    }));
+
+    const changeSelect = (key) => {
+      setActiveCountry.value = key;
+    };
 
     const addApplication = async () => {
-      console.log('addApplication', application);
       try {
         isLoader.value = true;
         await ApplicationApi.createApplication(application);
@@ -74,7 +111,9 @@ export default {
 
     return {
       application,
+      selectSettings,
       addApplication,
+      changeSelect,
     };
   },
 };

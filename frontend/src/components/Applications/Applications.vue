@@ -1,4 +1,5 @@
 <template>
+  <Loader v-if="isLoader"/>
   <div class="app-application">
     <div class="app-application-header">
       <div class="app-application-header__title">
@@ -28,9 +29,10 @@
 
 <script>
 import { useStore } from 'vuex';
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import TableTemplate from '@/components/Table/TableTemplate.vue';
 import ApplicationsForm from '@/components/Applications/ApplicationsForm.vue';
+import ApplicationApi from '@/api/Application/api';
 
 export default {
   name: 'Applications',
@@ -42,11 +44,23 @@ export default {
     const store = useStore();
     const searchText = ref('');
     const isVisibleApplicationModal = ref(false);
+    const isLoader = ref(false);
     console.log('store', store.getters.userInfo);
+
+    onBeforeMount(async () => {
+      try {
+        isLoader.value = true;
+        await ApplicationApi.getAllApplications();
+        isLoader.value = false;
+      } catch (e) {
+        isLoader.value = false;
+      }
+    });
 
     return {
       searchText,
       isVisibleApplicationModal,
+      isLoader,
     };
   },
 };
