@@ -9,7 +9,7 @@
          v-for="link in navList"
          :key="link.id"
          @click.prevent="proceedTo(link.route)">
-        {{ link.text }}
+        {{ $t(`${link.text}`) }}
       </a>
     </nav>
     <div class="app-header__language">
@@ -109,6 +109,10 @@ export default {
   justify-content: space-between;
   align-items: center;
 
+  &__language {
+    margin-left: auto;
+  }
+
   &__logo {
     font-size: 20px;
     cursor: pointer;
@@ -120,6 +124,7 @@ export default {
   }
 
   &__nav {
+    margin-left: auto;
 
     a {
       cursor: pointer;

@@ -24,21 +24,22 @@
     </div>
     <div class="app-field">
       <div class="app-field__label">
+        {{ $t('labels.status') }}
+      </div>
+      <select name="statuses" class="app-field__select" v-model="application.status">
+        <option :value="status.id" v-for="status in statuses" :key="status.id">
+          {{ $t(`${status.text}`) }}
+        </option>
+      </select>
+    </div>
+    <div class="app-field">
+      <div class="app-field__label">
         {{ $t('labels.amount') }}
       </div>
       <input type="number"
              class="app-field__input"
              v-model="application.amount"
       >
-    </div>
-    <div class="app-field">
-      <div class="app-field__label">
-        werrtey
-      </div>
-      <SelectWithKeyTemplate
-        :settings="selectSettings"
-        @changeSelect="changeSelect($event)"
-      />
     </div>
     <button class="app-button"
             @click="addApplication"
@@ -52,15 +53,15 @@
 import Modal from '@/components/Modal/Modal.vue';
 import ApplicationApi from '@/api/Application/api';
 import Loader from '@/components/Main/Loader.vue';
-import SelectWithKeyTemplate from '@/components/Main/SelectWithKeyTemplate.vue';
-import { reactive, ref, computed } from 'vue';
+import { reactive, ref } from 'vue';
+import STATUSES from '@/constants/statuses';
+import { sortBy } from 'lodash';
 
 export default {
   name: 'ApplicationsForm',
   components: {
     Modal,
     Loader,
-    SelectWithKeyTemplate,
   },
   setup(props, { emit }) {
     const application = reactive({
@@ -69,30 +70,9 @@ export default {
       amount: '',
       status: '',
     });
+    const statuses = sortBy(STATUSES, (el) => el.text);
     const isLoader = ref(false);
     const setActiveCountry = ref(-1);
-    const selectStatusList = ref([
-      {
-        key: 1,
-        text: '1',
-      },
-      {
-        key: 2,
-        text: '2',
-      },
-    ]);
-
-    const selectSettings = computed(() => ({
-      optionList: selectStatusList,
-      placeholderText: 'werrrr',
-      selectedKey: setActiveCountry,
-      disable: false,
-      toTop: false,
-      tabindex: 1,
-      selectClass: '',
-      imagePosition: 'left',
-      showImageInput: false,
-    }));
 
     const changeSelect = (key) => {
       setActiveCountry.value = key;
@@ -111,7 +91,7 @@ export default {
 
     return {
       application,
-      selectSettings,
+      statuses,
       addApplication,
       changeSelect,
     };

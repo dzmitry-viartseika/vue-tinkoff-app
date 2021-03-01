@@ -28,5 +28,16 @@
     "phone": "Phone",
     "amount": "Amount",
     "status": "Status"
+  },
+  "navList": {
+    "application": "Application",
+    "help": "Help",
+    "logOut": "Log out"
+  },
+  "status": {
+    "active": "Active",
+    "done": "Done",
+    "inProcess": "In Process",
+    "canceled": "Cancel"
   }
 }

@@ -35,6 +35,11 @@ body {
     height: auto;
     margin-bottom: 10px;
 
+    &__select {
+      width: 100%;
+      height: 40px;
+    }
+
     &__label {
       font: $font-size-label $font-global-bold;
       margin-bottom: 10px;

@@ -2,17 +2,17 @@ const navList = [
   {
     id: 1,
     route: '/',
-    text: 'Заявки',
+    text: 'navList.application',
   },
   {
     id: 2,
     route: '/help',
-    text: 'Помощь',
+    text: 'navList.help',
   },
   {
     id: 3,
     route: '/logout',
-    text: 'Выйти',
+    text: 'navList.logOut',
   },
 ];
 

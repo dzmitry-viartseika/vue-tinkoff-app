@@ -28,5 +28,16 @@
     "phone": "Телефон",
     "amount": "Сумма",
     "status": "Статус"
+  },
+  "navList": {
+    "application": "Заявки",
+    "help": "Помощь",
+    "logOut": "Выйти"
+  },
+  "status": {
+    "active": "Активен",
+    "done": "Выполнен",
+    "inProcess": "В процессе",
+    "canceled": "Отменен"
   }
 }
