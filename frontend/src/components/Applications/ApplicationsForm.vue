@@ -2,7 +2,7 @@
   <Loader v-if="isLoader"/>
   <Modal
     :title="$t('modals.createApplication')"
-    @create="create"
+    @closeModal="closeModal"
   >
     <div class="app-field">
       <div class="app-field__label">
@@ -78,6 +78,10 @@ export default {
       setActiveCountry.value = key;
     };
 
+    const closeModal = () => {
+      emit('update:isVisibleApplicationModal', false);
+    };
+
     const addApplication = async () => {
       try {
         isLoader.value = true;
@@ -94,6 +98,7 @@ export default {
       statuses,
       addApplication,
       changeSelect,
+      closeModal,
     };
   },
 };

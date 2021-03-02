@@ -7,6 +7,7 @@
         </div>
         <div
           class="app-modal-form-wrap-header__close"
+          @click="closeModal"
         >
           <closeModalIcon />
         </div>
@@ -17,6 +18,7 @@
     </div>
     <div
       class="app-modal-form__overlay"
+      @click="closeModal"
     ></div>
   </div>
 </template>
@@ -35,7 +37,15 @@ export default {
   components: {
     closeModalIcon,
   },
-  setup() {},
+  setup(props, { emit }) {
+    const closeModal = () => {
+      emit('closeModal');
+    };
+
+    return {
+      closeModal,
+    };
+  },
 };
 </script>
 
