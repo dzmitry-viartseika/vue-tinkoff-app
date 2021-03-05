@@ -38,6 +38,15 @@ const routes = [
       layout: 'main',
     },
   },
+  {
+    path: '/application/:id',
+    name: 'Application',
+    component: () => import(/* webpackChunkName: "application" */ '@/components/Applications/Application.vue'),
+    meta: {
+      title: i18n.global.t('titles.signUp'),
+      layout: 'main',
+    },
+  },
 ];
 
 const router = createRouter({

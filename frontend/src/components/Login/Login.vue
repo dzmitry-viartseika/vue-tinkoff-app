@@ -1,59 +1,57 @@
 <template>
   <Loader v-if="isLoader"/>
-  <div class="app-modal">
-    <div class="app-modal-form">
-      <div class="app-modal-form__header">
-        <h2 class="app__title">
-          {{ $t(formTitle) }}
-        </h2>
-      </div>
-      <div class="app-modal-form__content">
-        <div class="app-field">
-          <div class="app-field__label">
-            {{ $t(formLabelEmail) }}
-          </div>
-          <input type="text"
-                 class="app-field__input"
-                 v-model="user.email"
-          >
+  <Modal
+    :title="$t('login.title')"
+    :closeIcon="false"
+  >
+    <div class="app-modal-form__content">
+      <div class="app-field">
+        <div class="app-field__label">
+          {{ $t('labels.email') }}
         </div>
-        <div class="app-field">
-          <div class="app-field__label">
-            {{ $t(formLabelPassword) }}
-          </div>
-          <input type="password"
-                 class="app-field__input"
-                 v-model="user.password"
-          >
-        </div>
-      </div>
-      <div class="app-modal-form__footer">
-        <div class="app-modal-form__footer-link"
-             @click="proceedTo('/sign-up')"
+        <input type="text"
+               class="app-field__input"
+               v-model="user.email"
         >
-          {{ $t(formLinkText) }}
+      </div>
+      <div class="app-field">
+        <div class="app-field__label">
+          {{ $t('labels.password') }}
         </div>
-        <button class="app-button"
-                @click="loginUser"
+        <input type="password"
+               class="app-field__input"
+               v-model="user.password"
         >
-          {{ $t(loginButton) }}
-        </button>
       </div>
     </div>
-  </div>
+    <div class="app-modal-form__footer">
+      <div class="app-modal-form__footer-link"
+           @click="proceedTo('/sign-up')"
+      >
+        {{ $t('login.createAccount') }}
+      </div>
+      <button class="app-button"
+              @click="loginUser"
+      >
+        {{ $t('global.signIn') }}
+      </button>
+    </div>
+  </Modal>
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UserApi from '@/api/User/api';
 import Loader from '@/components/Main/Loader.vue';
 import { useStore } from 'vuex';
+import Modal from '@/components/Modal/Modal.vue';
 
 export default {
   name: 'Login',
   components: {
     Loader,
+    Modal,
   },
   setup() {
     const router = useRouter();
@@ -63,16 +61,6 @@ export default {
       password: '',
     });
     const isLoader = ref(false);
-    const loginTitle = 'login.title';
-    const labelEmail = 'labels.email';
-    const formLink = 'login.createAccount';
-    const labelPassword = 'labels.password';
-    const loginButtonText = 'global.signIn';
-    const formTitle = computed(() => loginTitle);
-    const formLinkText = computed(() => formLink);
-    const formLabelEmail = computed(() => labelEmail);
-    const formLabelPassword = computed(() => labelPassword);
-    const loginButton = computed(() => loginButtonText);
     const setUserInfo = (data) => store.dispatch('setUserInfo', data);
 
     const proceedTo = (route) => {
@@ -93,12 +81,8 @@ export default {
     };
 
     return {
-      formTitle,
-      formLabelEmail,
-      formLabelPassword,
-      formLinkText,
-      loginButton,
       user,
+      isLoader,
       proceedTo,
       loginUser,
     };

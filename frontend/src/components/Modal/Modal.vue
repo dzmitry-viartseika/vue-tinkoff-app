@@ -6,6 +6,7 @@
           {{ title }}
         </div>
         <div
+          v-if="closeIcon"
           class="app-modal-form-wrap-header__close"
           @click="closeModal"
         >
@@ -32,6 +33,10 @@ export default {
     title: {
       type: String,
       default: '',
+    },
+    closeIcon: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {

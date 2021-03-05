@@ -1,68 +1,66 @@
 <template>
   <Loader v-if="isLoader"/>
-  <div class="app-modal">
-    <div class="app-modal-form">
-      <div class="app-modal-form__header">
-        <h2 class="app__title">
-          {{ $t(formTitle) }}
-        </h2>
-      </div>
-      <div class="app-modal-form__content">
-        <div class="app-field">
-          <div class="app-field__label">
-            {{ $t(formLabelName) }}
-          </div>
-          <input type="text"
-                 class="app-field__input"
-                 v-model="user.name"
-          >
+  <Modal
+    :title="$t('login.signUp')"
+    :closeIcon="false"
+  >
+    <div class="app-modal-form__content">
+      <div class="app-field">
+        <div class="app-field__label">
+          {{ $t('labels.name') }}
         </div>
-        <div class="app-field">
-          <div class="app-field__label">
-            {{ $t(formLabelEmail) }}
-          </div>
-          <input type="email"
-                 class="app-field__input"
-                 v-model="user.email"
-          >
-        </div>
-        <div class="app-field">
-          <div class="app-field__label">
-            {{ $t(formLabelPassword) }}
-          </div>
-          <input type="password"
-                 class="app-field__input"
-                 v-model="user.password"
-          >
-        </div>
-      </div>
-      <div class="app-modal-form__footer">
-        <div class="app-modal-form__footer-link"
-             @click="proceedTo('/login')"
+        <input type="text"
+               class="app-field__input"
+               v-model="user.name"
         >
-          {{ $t(formLinkText) }}
+      </div>
+      <div class="app-field">
+        <div class="app-field__label">
+          {{ $t('labels.email') }}
         </div>
-        <button class="app-button"
-          @click="signUpUser"
+        <input type="email"
+               class="app-field__input"
+               v-model="user.email"
         >
-          {{ $t(loginButton) }}
-        </button>
+      </div>
+      <div class="app-field">
+        <div class="app-field__label">
+          {{ $t('labels.password') }}
+        </div>
+        <input type="password"
+               class="app-field__input"
+               v-model="user.password"
+        >
       </div>
     </div>
-  </div>
+    <div class="app-modal-form__footer">
+      <div class="app-modal-form__footer-link"
+           @click="proceedTo('/login')"
+      >
+        {{ $t('login.haveAccount') }}?
+      </div>
+      <button class="app-button"
+              @click="signUpUser"
+      >
+        {{ $t('global.signUp') }}
+      </button>
+    </div>
+  </Modal>
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UsersApi from '@/api/User/api';
 import Loader from '@/components/Main/Loader.vue';
 import { useStore } from 'vuex';
+import Modal from '@/components/Modal/Modal.vue';
 
 export default {
   name: 'SignUp',
   components: {
     Loader,
+    Modal,
   },
   setup() {
     const router = useRouter();
@@ -73,18 +71,6 @@ export default {
       email: '',
       password: '',
     });
-    const loginTitle = 'login.signUp';
-    const formLink = 'login.haveAccount';
-    const labelEmail = 'labels.email';
-    const labelName = 'labels.name';
-    const labelPassword = 'labels.password';
-    const loginButtonText = 'global.signUp';
-    const formTitle = computed(() => loginTitle);
-    const formLabelName = computed(() => labelName);
-    const formLabelEmail = computed(() => labelEmail);
-    const formLabelPassword = computed(() => labelPassword);
-    const loginButton = computed(() => loginButtonText);
-    const formLinkText = computed(() => formLink);
     const setUserInfo = (data) => store.dispatch('setUserInfo', data);
 
     const proceedTo = (route) => {
@@ -106,12 +92,6 @@ export default {
     };
 
     return {
-      formTitle,
-      formLabelEmail,
-      formLabelPassword,
-      formLabelName,
-      formLinkText,
-      loginButton,
       user,
       isLoader,
       proceedTo,

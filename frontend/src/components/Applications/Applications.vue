@@ -8,15 +8,24 @@
       <button class="app-button"
               @click="isVisibleApplicationModal= true"
       >
-        Создать
+        {{ $t('global.create') }}
       </button>
     </div>
     <div class="app-application-filters">
-      searchText={{ searchText }}
       <input type="text" class="app__input"
              v-model="searchText">
+      <select name="statuses" class="app-field__select" v-model="filterStatus">
+        <option :value="status.id" v-for="status in statuses" :key="status.id">
+          {{ $t(`${status.text}`) }}
+        </option>
+      </select>
     </div>
     <div class="app-application-table">
+      <div v-for="application in applicationList" :key="application._id">
+        <div @click="proceedToApplication(application._id)">
+          {{ application.fullName }}
+        </div>
+      </div>
       <TableTemplate />
     </div>
     <transition name="fade-el">
@@ -28,29 +37,45 @@
 </template>
 
 <script>
-import { useStore } from 'vuex';
 import { ref, onBeforeMount } from 'vue';
 import TableTemplate from '@/components/Table/TableTemplate.vue';
 import ApplicationsForm from '@/components/Applications/ApplicationsForm.vue';
 import ApplicationApi from '@/api/Application/api';
+import STATUSES from '@/constants/statuses';
+import { sortBy } from 'lodash';
+import { useRouter } from 'vue-router';
+import Loader from '@/components/Main/Loader.vue';
 
 export default {
   name: 'Applications',
   components: {
     TableTemplate,
     ApplicationsForm,
+    Loader,
   },
   setup() {
-    const store = useStore();
     const searchText = ref('');
+    const filterStatus = ref('');
+    const router = useRouter();
+    const applicationList = ref(null);
     const isVisibleApplicationModal = ref(false);
     const isLoader = ref(false);
-    console.log('store', store.getters.userInfo);
+    const statuses = sortBy(STATUSES, (el) => el.text);
+
+    const proceedToApplication = (id) => {
+      router.push({
+        name: 'Application',
+        params: {
+          id,
+        },
+      });
+    };
 
     onBeforeMount(async () => {
       try {
         isLoader.value = true;
-        await ApplicationApi.getAllApplications();
+        const { data } = await ApplicationApi.getAllApplications();
+        applicationList.value = data;
         isLoader.value = false;
       } catch (e) {
         isLoader.value = false;
@@ -61,6 +86,10 @@ export default {
       searchText,
       isVisibleApplicationModal,
       isLoader,
+      statuses,
+      filterStatus,
+      applicationList,
+      proceedToApplication,
     };
   },
 };
@@ -84,6 +113,12 @@ export default {
 
   &-filters {
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    input, select {
+      width: calc(50% - 10px);
+    }
   }
 }
 
