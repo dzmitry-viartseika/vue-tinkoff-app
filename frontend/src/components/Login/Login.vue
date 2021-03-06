@@ -11,8 +11,13 @@
         </div>
         <input type="text"
                class="app-field__input"
-               v-model="user.email"
+               :class="{'app-field__input_error': emailError}"
+               v-model="email"
+               @blur="emailBlur"
         >
+        <small class="app-field__validation" v-if="emailError">
+          {{ emailError }}
+        </small>
       </div>
       <div class="app-field">
         <div class="app-field__label">
@@ -20,8 +25,15 @@
         </div>
         <input type="password"
                class="app-field__input"
-               v-model="user.password"
+               v-model="password"
+               :class="{'app-field__input_error': passwordError}"
+               @blur="passwordBlur"
         >
+        <transition name="bounce">
+          <small class="app-field__validation" v-if="passwordError">
+            {{ passwordError }}
+          </small>
+        </transition>
       </div>
     </div>
     <div class="app-modal-form__footer">
@@ -31,7 +43,7 @@
         {{ $t('login.createAccount') }}
       </div>
       <button class="app-button"
-              @click="loginUser"
+              @click="onSubmit"
       >
         {{ $t('global.signIn') }}
       </button>
@@ -46,6 +58,9 @@ import UserApi from '@/api/User/api';
 import Loader from '@/components/Main/Loader.vue';
 import { useStore } from 'vuex';
 import Modal from '@/components/Modal/Modal.vue';
+import { useField, useForm } from 'vee-validate';
+import * as yup from 'yup';
+import i18n from '@/i18n';
 
 export default {
   name: 'Login',
@@ -56,6 +71,23 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
+    const { handleSubmit } = useForm();
+    const { value: email, errorMessage: emailError, handleBlur: emailBlur } = useField(
+      'email',
+      yup
+        .string()
+        .trim()
+        .required(i18n.global.t('validation.required'))
+        .email(i18n.global.t('validation.email')),
+    );
+    const { value: password, errorMessage: passwordError, handleBlur: passwordBlur } = useField(
+      'password',
+      yup
+        .string()
+        .trim()
+        .required(i18n.global.t('validation.required'))
+        .min(6, i18n.global.t('validation.maxLenght')),
+    );
     const user = reactive({
       email: '',
       password: '',
@@ -70,7 +102,11 @@ export default {
     const loginUser = async () => {
       try {
         isLoader.value = true;
-        const resp = await UserApi.login(user);
+        const userLogin = {
+          email: email.value,
+          password: password.value,
+        };
+        const resp = await UserApi.login(userLogin);
         localStorage.setItem('token', JSON.stringify(resp.data.token));
         await setUserInfo(resp.data.user);
         isLoader.value = false;
@@ -80,11 +116,21 @@ export default {
       }
     };
 
+    const onSubmit = handleSubmit(() => {
+      loginUser();
+    });
+
     return {
       user,
+      email,
+      emailError,
+      emailBlur,
+      password,
+      passwordError,
+      passwordBlur,
       isLoader,
       proceedTo,
-      loginUser,
+      onSubmit,
     };
   },
 };

@@ -133,3 +133,14 @@
     left: 100%;
   }
 }
+
+// bounce
+.bounce-enter-active,
+.bounce-leave-active {
+  transition: 0.3s cubic-bezier(0.4, 0.9, 0.4, 1);
+}
+.bounce-leave-to,
+.bounce-enter-from {
+  transform: scale(0);
+  opacity: 0;
+}

@@ -39,5 +39,10 @@
     "done": "Done",
     "inProcess": "In Process",
     "canceled": "Cancel"
+  },
+  "validation": {
+    "email": "Enter correct email",
+    "required": "Fill in this field",
+    "minLenght": "Minimum characters is 6"
   }
 }
