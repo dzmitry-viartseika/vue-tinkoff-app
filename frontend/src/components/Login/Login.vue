@@ -85,8 +85,7 @@ export default {
       yup
         .string()
         .trim()
-        .required(i18n.global.t('validation.required'))
-        .min(6, i18n.global.t('validation.maxLenght')),
+        .required(i18n.global.t('validation.required')),
     );
     const user = reactive({
       email: '',

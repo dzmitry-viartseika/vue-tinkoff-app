@@ -21,12 +21,13 @@
       </select>
     </div>
     <div class="app-application-table">
-      <div v-for="application in applicationList" :key="application._id">
-        <div @click="proceedToApplication(application._id)">
-          {{ application.fullName }}
-        </div>
-      </div>
-      <TableTemplate />
+      <TableTemplate :headers="headers"
+                     :applicationList="applicationList"
+                     @proceedToApplication="proceedToApplication"
+      />
+    </div>
+    <div class="app-application-pagination">
+      wertey
     </div>
     <transition name="fade-el">
       <ApplicationsForm v-if="isVisibleApplicationModal"
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import TableTemplate from '@/components/Table/TableTemplate.vue';
 import ApplicationsForm from '@/components/Applications/ApplicationsForm.vue';
 import ApplicationApi from '@/api/Application/api';
@@ -62,6 +63,33 @@ export default {
     const isLoader = ref(false);
     const statuses = sortBy(STATUSES, (el) => el.text);
 
+    const headers = [
+      {
+        id: 1,
+        text: '№',
+      },
+      {
+        id: 2,
+        text: 'ФИО',
+      },
+      {
+        id: 3,
+        text: 'Телефон',
+      },
+      {
+        id: 4,
+        text: 'Сумма',
+      },
+      {
+        id: 5,
+        text: 'Статус',
+      },
+      {
+        id: 6,
+        text: 'Действие',
+      },
+    ];
+
     const proceedToApplication = (id) => {
       router.push({
         name: 'Application',
@@ -70,6 +98,11 @@ export default {
         },
       });
     };
+
+    watch(filterStatus, (newVal, oldVal) => {
+      console.log('newVal', newVal);
+      console.log('oldVal', oldVal);
+    });
 
     onBeforeMount(async () => {
       try {
@@ -89,6 +122,7 @@ export default {
       statuses,
       filterStatus,
       applicationList,
+      headers,
       proceedToApplication,
     };
   },
