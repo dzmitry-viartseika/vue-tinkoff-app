@@ -33,7 +33,7 @@
 
       <div class="app-application-content-row">
         <div class="app-application-content-row__label">
-          Статус
+          Статус {{ activeApplication }}
         </div>
         <div>
           {{ activeApplication.status }}
@@ -82,9 +82,8 @@ export default {
     onBeforeMount(async () => {
       try {
         isLoader.value = true;
-        const { data } = await ApplicationApi.getAllApplications();
-        // eslint-disable-next-line no-underscore-dangle
-        activeApplication.value = data.find((item) => item._id === id);
+        const { data } = await ApplicationApi.getApplicationById(id);
+        activeApplication.value = data;
         isLoader.value = false;
       } catch (e) {
         isLoader.value = false;

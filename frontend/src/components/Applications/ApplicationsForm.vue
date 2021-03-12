@@ -3,6 +3,7 @@
   <Modal
     :title="$t('modals.createApplication')"
     @closeModal="closeModal"
+    :closeIcon="true"
   >
     <div class="app-field">
       <div class="app-field__label">
@@ -57,7 +58,7 @@
       </small>
     </div>
     <button class="app-button"
-            @click="addApplication"
+            @click="onSubmit"
     >
       {{ $t('global.create') }}
     </button>
@@ -127,10 +128,10 @@ export default {
       try {
         isLoader.value = true;
         const application = {
-          fullName,
-          phone,
-          state,
-          amount,
+          fullName: fullName.value,
+          phone: phone.value,
+          state: state.value,
+          amount: amount.value,
         };
         const { data } = await ApplicationApi.createApplication(application);
         console.log('data', data);
@@ -163,6 +164,7 @@ export default {
       changeSelect,
       closeModal,
       onSubmit,
+      isLoader,
     };
   },
 };

@@ -13,8 +13,12 @@
     </div>
     <div class="app-application-filters">
       <input type="text" class="app__input"
-             v-model="searchText">
-      <select name="statuses" class="app-field__select" v-model="filterStatus">
+             @change="changeFilter"
+             v-model.lazy="searchText">
+      <select name="statuses" class="app-field__select"
+              v-model="filterStatus"
+              @change="changeFilter"
+      >
         <option :value="status.id" v-for="status in statuses" :key="status.id">
           {{ $t(`${status.text}`) }}
         </option>
@@ -99,6 +103,19 @@ export default {
       });
     };
 
+    const changeFilter = async () => {
+      const search = searchText.value;
+      const status = filterStatus.value;
+      await ApplicationApi.getAllApplications(10, 1, search, status)
+        .then((resp) => {
+          const { docs } = resp.data;
+          applicationList.value = docs;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+
     watch(filterStatus, (newVal, oldVal) => {
       console.log('newVal', newVal);
       console.log('oldVal', oldVal);
@@ -107,8 +124,10 @@ export default {
     onBeforeMount(async () => {
       try {
         isLoader.value = true;
-        const { data } = await ApplicationApi.getAllApplications();
-        applicationList.value = data;
+        const limit = 10;
+        const skip = 2;
+        const { data: { docs } } = await ApplicationApi.getAllApplications(limit, skip);
+        applicationList.value = docs;
         isLoader.value = false;
       } catch (e) {
         isLoader.value = false;
@@ -123,6 +142,7 @@ export default {
       filterStatus,
       applicationList,
       headers,
+      changeFilter,
       proceedToApplication,
     };
   },

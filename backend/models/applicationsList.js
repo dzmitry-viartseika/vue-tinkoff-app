@@ -23,6 +23,7 @@ const applicationSchema = new mongoose.Schema({
     }
 });
 
-const Application = mongoose.model('Applications', applicationSchema)
+// applicationSchema.index({ fullName: 'text'});
 applicationSchema.plugin(mongoosePaginate);
+const Application = mongoose.model('Applications', applicationSchema)
 module.exports = Application

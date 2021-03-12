@@ -4,6 +4,7 @@ const applications_controller = new ApplicationsController();
 const router = new express.Router();
 
 router.get('/getApplications', applications_controller.getApplications);
+router.get('/getApplicationById', applications_controller.getApplicationById);
 router.post('/newApplication', applications_controller.newApplication);
 router.delete('/deleteApplication', applications_controller.deleteApplication);
 
